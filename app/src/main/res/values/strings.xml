@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Playlist Maker</string>
-    <string name="menu_search">Поиск</string>
-    <string name="menu_playlists">Плейлисты</string>
-    <string name="menu_favorites">Избранное</string>
-    <string name="menu_settings">Настройки</string>
+    <string name="search">Поиск</string>
+    <string name="playlists">Плейлисты</string>
+    <string name="favorites">Избранное</string>
+    <string name="settings">Настройки</string>
     <string name="toast_button_clicked">Нажата кнопка "%1$s"</string>
 </resources>

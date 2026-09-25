@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,11 +40,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private val PrimaryBlue = Color(0xFF3772E7)
-private val BackgroundWhite = Color(0xFFFFFFFF)
-private val TextPrimary = Color(0xFF1A1B22)
-private val ArrowGrey = Color(0xFF999999)
-
 data class MenuItemData(
     val titleRes: Int,
     val icon: ImageVector
@@ -54,16 +50,16 @@ fun MainScreen() {
     val context = LocalContext.current
 
     val menuItems = listOf(
-        MenuItemData(R.string.menu_search, Icons.Default.Search),
-        MenuItemData(R.string.menu_playlists, Icons.AutoMirrored.Filled.List),
-        MenuItemData(R.string.menu_favorites, Icons.Default.FavoriteBorder),
-        MenuItemData(R.string.menu_settings, Icons.Default.Settings),
+        MenuItemData(R.string.search, Icons.Default.Search),
+        MenuItemData(R.string.playlists, Icons.AutoMirrored.Filled.List),
+        MenuItemData(R.string.favorites, Icons.Default.FavoriteBorder),
+        MenuItemData(R.string.settings, Icons.Default.Settings),
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(PrimaryBlue)
+            .background(colorResource(R.color.primary_blue))
     ) {
         Text(
             text = stringResource(R.string.app_name),
@@ -79,7 +75,7 @@ fun MainScreen() {
         )
 
         Surface(
-            color = BackgroundWhite,
+            color = colorResource(R.color.white),
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             modifier = Modifier.fillMaxSize()
         ) {
@@ -122,7 +118,7 @@ private fun MenuItemRow(
         Icon(
             imageVector = item.icon,
             contentDescription = null,
-            tint = TextPrimary,
+            tint = colorResource(R.color.text_primary),
             modifier = Modifier.size(24.dp)
         )
 
@@ -130,7 +126,7 @@ private fun MenuItemRow(
 
         Text(
             text = stringResource(item.titleRes),
-            color = TextPrimary,
+            color = colorResource(R.color.text_primary),
             fontSize = 18.sp,
             modifier = Modifier.weight(1f)
         )
@@ -138,7 +134,7 @@ private fun MenuItemRow(
         Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = ArrowGrey,
+            tint = colorResource(R.color.arrow_gray),
             modifier = Modifier.size(24.dp)
         )
     }
