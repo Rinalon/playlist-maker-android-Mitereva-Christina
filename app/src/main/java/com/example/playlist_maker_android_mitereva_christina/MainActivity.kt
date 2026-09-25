@@ -1,6 +1,7 @@
 package com.example.playlist_maker_android_mitereva_christina
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
 
 data class MenuItemData(
     val titleRes: Int,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val onClick: (Context) -> Unit
 )
 
 @Composable
@@ -50,10 +52,46 @@ fun MainScreen() {
     val context = LocalContext.current
 
     val menuItems = listOf(
-        MenuItemData(R.string.search, Icons.Default.Search),
-        MenuItemData(R.string.playlists, Icons.AutoMirrored.Filled.List),
-        MenuItemData(R.string.favorites, Icons.Default.FavoriteBorder),
-        MenuItemData(R.string.settings, Icons.Default.Settings),
+        MenuItemData(
+            titleRes = R.string.search,
+            icon = Icons.Default.Search,
+            onClick = { ctx ->
+                ctx.startActivity(Intent(ctx, SearchActivity::class.java))
+            }
+        ),
+        MenuItemData(
+            titleRes = R.string.playlists,
+            icon = Icons.AutoMirrored.Filled.List,
+            onClick = { ctx ->
+                showToast(
+                    ctx,
+                    ctx.getString(
+                        R.string.toast_button_clicked,
+                        ctx.getString(R.string.playlists)
+                    )
+                )
+            }
+        ),
+        MenuItemData(
+            titleRes = R.string.favorites,
+            icon = Icons.Default.FavoriteBorder,
+            onClick = { ctx ->
+                showToast(
+                    ctx,
+                    ctx.getString(
+                        R.string.toast_button_clicked,
+                        ctx.getString(R.string.favorites)
+                    )
+                )
+            }
+        ),
+        MenuItemData(
+            titleRes = R.string.settings,
+            icon = Icons.Default.Settings,
+            onClick = { ctx ->
+                ctx.startActivity(Intent(ctx, SettingsActivity::class.java))
+            }
+        ),
     )
 
     Column(
@@ -87,15 +125,7 @@ fun MainScreen() {
                 menuItems.forEach { item ->
                     MenuItemRow(
                         item = item,
-                        onClick = {
-                            showToast(
-                                context = context,
-                                message = context.getString(
-                                    R.string.toast_button_clicked,
-                                    context.getString(item.titleRes)
-                                )
-                            )
-                        }
+                        onClick = { item.onClick(context) }
                     )
                 }
             }
@@ -144,7 +174,7 @@ private fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun MainScreenPreview() {
     MaterialTheme {
