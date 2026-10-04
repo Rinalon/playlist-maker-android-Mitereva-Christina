@@ -7,4 +7,11 @@
     <string name="toast_button_clicked">Нажата кнопка "%1$s"</string>
     <string name="back">Назад</string>
     <string name="clear">Очистить</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="write_to_support">Написать в поддержку</string>
+    <string name="user_agreement">Пользовательское соглашение</string>
+    <string name="email_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="email_body">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="practicum_offer_url" translatable="false">https://yandex.ru/legal/practicum_offer</string>
 </resources>
