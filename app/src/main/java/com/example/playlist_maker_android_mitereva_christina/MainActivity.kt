@@ -1,14 +1,20 @@
 package com.example.playlist_maker_android_mitereva_christina
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -16,7 +22,10 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,45 +38,51 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                MainScreen()
+                val navController = rememberNavController()
+                PlaylistHost(navController = navController)
             }
         }
     }
 }
 
+
 data class MenuItemData(
     val titleRes: Int,
     val icon: ImageVector,
-    val onClick: (Context) -> Unit
+    val onClick: () -> Unit
 )
 
+
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    onSearchClick: () -> Unit,
+    onSettingsClick: () -> Unit
+) {
     val context = LocalContext.current
 
     val menuItems = listOf(
         MenuItemData(
             titleRes = R.string.search,
             icon = Icons.Default.Search,
-            onClick = { ctx ->
-                ctx.startActivity(Intent(ctx, SearchActivity::class.java))
-            }
+            onClick = onSearchClick
         ),
         MenuItemData(
             titleRes = R.string.playlists,
             icon = Icons.AutoMirrored.Filled.List,
-            onClick = { ctx ->
+            onClick = {
                 showToast(
-                    ctx,
-                    ctx.getString(
+                    context,
+                    context.getString(
                         R.string.toast_button_clicked,
-                        ctx.getString(R.string.playlists)
+                        context.getString(R.string.playlists)
                     )
                 )
             }
@@ -75,12 +90,12 @@ fun MainScreen() {
         MenuItemData(
             titleRes = R.string.favorites,
             icon = Icons.Default.FavoriteBorder,
-            onClick = { ctx ->
+            onClick = {
                 showToast(
-                    ctx,
-                    ctx.getString(
+                    context,
+                    context.getString(
                         R.string.toast_button_clicked,
-                        ctx.getString(R.string.favorites)
+                        context.getString(R.string.favorites)
                     )
                 )
             }
@@ -88,9 +103,7 @@ fun MainScreen() {
         MenuItemData(
             titleRes = R.string.settings,
             icon = Icons.Default.Settings,
-            onClick = { ctx ->
-                ctx.startActivity(Intent(ctx, SettingsActivity::class.java))
-            }
+            onClick = onSettingsClick
         ),
     )
 
@@ -125,13 +138,14 @@ fun MainScreen() {
                 menuItems.forEach { item ->
                     MenuItemRow(
                         item = item,
-                        onClick = { item.onClick(context) }
+                        onClick = item.onClick
                     )
                 }
             }
         }
     }
 }
+
 
 @Composable
 private fun MenuItemRow(
@@ -170,14 +184,19 @@ private fun MenuItemRow(
     }
 }
 
+
 private fun showToast(context: Context, message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
-@Preview()
+
+@Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
     MaterialTheme {
-        MainScreen()
+        MainScreen(
+            onSearchClick = {},
+            onSettingsClick = {}
+        )
     }
 }

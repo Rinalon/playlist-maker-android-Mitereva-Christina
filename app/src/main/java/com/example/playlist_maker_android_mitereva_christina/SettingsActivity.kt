@@ -1,12 +1,8 @@
 package com.example.playlist_maker_android_mitereva_christina
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.Icon
@@ -37,36 +34,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class SettingsActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                SettingsScreen()
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-private fun SettingsScreen() {
+fun SettingsScreen(onBackClick: () -> Unit = {}) {
     val context = LocalContext.current
-    val activity = context as? Activity
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(R.color.white))
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 4.dp, vertical = 24.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { activity?.finish() }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
@@ -94,10 +78,7 @@ private fun SettingsScreen() {
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f)
             )
-            Switch(
-                checked = false,
-                onCheckedChange = { }
-            )
+            Switch(checked = false, onCheckedChange = { })
         }
 
         SettingsRow(
@@ -105,13 +86,11 @@ private fun SettingsScreen() {
             icon = Icons.Default.Share,
             onClick = { shareApp(context) }
         )
-
         SettingsRow(
             titleRes = R.string.write_to_support,
             icon = Icons.Default.SupportAgent,
             onClick = { writeToSupport(context) }
         )
-
         SettingsRow(
             titleRes = R.string.user_agreement,
             icon = Icons.AutoMirrored.Filled.KeyboardArrowRight,
@@ -119,7 +98,6 @@ private fun SettingsScreen() {
         )
     }
 }
-
 
 @Composable
 private fun SettingsRow(
@@ -140,7 +118,6 @@ private fun SettingsRow(
             fontSize = 16.sp,
             modifier = Modifier.weight(1f)
         )
-
         Icon(
             imageVector = icon,
             contentDescription = null,
@@ -151,30 +128,30 @@ private fun SettingsRow(
 }
 
 private fun shareApp(context: Context) {
-    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+    val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(
             Intent.EXTRA_TEXT,
             "https://practicum.yandex.ru/android-developer/"
         )
     }
-    context.startActivity(Intent.createChooser(shareIntent, null))
+    context.startActivity(Intent.createChooser(intent, null))
 }
 
 private fun writeToSupport(context: Context) {
-    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:")
         putExtra(Intent.EXTRA_EMAIL, arrayOf("mitereva@sfedu.ru"))
         putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.email_subject))
         putExtra(Intent.EXTRA_TEXT, context.getString(R.string.email_body))
     }
-    context.startActivity(emailIntent)
+    context.startActivity(intent)
 }
 
 private fun openUserAgreement(context: Context) {
-    val browserIntent = Intent(
+    val intent = Intent(
         Intent.ACTION_VIEW,
         Uri.parse(context.getString(R.string.practicum_offer_url))
     )
-    context.startActivity(browserIntent)
+    context.startActivity(intent)
 }

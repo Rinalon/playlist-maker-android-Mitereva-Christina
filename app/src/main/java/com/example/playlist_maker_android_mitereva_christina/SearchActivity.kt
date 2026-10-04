@@ -1,9 +1,5 @@
 package com.example.playlist_maker_android_mitereva_christina
 
-import android.app.Activity
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,23 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
-class SearchActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            MaterialTheme {
-                SearchScreen()
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-private fun SearchScreen() {
-    val context = LocalContext.current
-    val activity = context as? Activity
+fun SearchScreen(onBackClick: () -> Unit = {}) {
     var query by remember { mutableStateOf("") }
 
     Column(
@@ -61,14 +42,13 @@ private fun SearchScreen() {
             .fillMaxSize()
             .background(colorResource(R.color.white))
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 4.dp, vertical = 24.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { activity?.finish() }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
@@ -97,7 +77,7 @@ private fun SearchScreen() {
                 )
             },
             leadingIcon = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = { /* логика позже */ }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = stringResource(R.string.search),
