@@ -5,4 +5,6 @@
     <string name="favorites">Избранное</string>
     <string name="settings">Настройки</string>
     <string name="toast_button_clicked">Нажата кнопка "%1$s"</string>
+    <string name="back">Назад</string>
+    <string name="clear">Очистить</string>
 </resources>
