@@ -76,7 +76,7 @@ fun SearchScreen(onBackClick: () -> Unit = {}) {
                 )
             },
             leadingIcon = {
-                IconButton(onClick = { /* логика позже */ }) {
+                IconButton(onClick = { }) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = stringResource(R.string.search),
@@ -98,8 +98,8 @@ fun SearchScreen(onBackClick: () -> Unit = {}) {
             singleLine = true,
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color(0xFFE6E8EB),
-                unfocusedContainerColor = Color(0xFFE6E8EB),
+                focusedContainerColor = colorResource(R.color.platinum),
+                unfocusedContainerColor = colorResource(R.color.platinum),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 cursorColor = colorResource(R.color.primary_blue)
