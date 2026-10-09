@@ -96,7 +96,6 @@ fun SettingsScreen(onBackClick: () -> Unit = {}) {
         )
     }
 }
-
 @Composable
 private fun SettingsRow(
     titleRes: Int,
@@ -130,7 +129,7 @@ private fun shareApp(context: Context) {
         type = "text/plain"
         putExtra(
             Intent.EXTRA_TEXT,
-            "https://practicum.yandex.ru/android-developer/"
+            context.getString(R.string.share_it_url)
         )
     }
     context.startActivity(Intent.createChooser(intent, null))
@@ -139,7 +138,7 @@ private fun shareApp(context: Context) {
 private fun writeToSupport(context: Context) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:")
-        putExtra(Intent.EXTRA_EMAIL, arrayOf("mitereva@sfedu.ru"))
+        putExtra(Intent.EXTRA_EMAIL, arrayOf(context.getString(R.string.support_email)))
         putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.email_subject))
         putExtra(Intent.EXTRA_TEXT, context.getString(R.string.email_body))
     }

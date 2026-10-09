@@ -14,4 +14,6 @@
     <string name="email_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="email_body">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="practicum_offer_url" translatable="false">https://yandex.ru/legal/practicum_offer</string>
+    <string name="share_it_url" translatable="false">https://practicum.yandex.ru/android-developer/</string>
+    <string name="support_email" translatable="false">mitereva@sfedu.ru</string>
 </resources>
