@@ -31,11 +31,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreen(onBackClick: () -> Unit = {}) {
     val context = LocalContext.current
+    var isDarkTheme by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -76,7 +81,10 @@ fun SettingsScreen(onBackClick: () -> Unit = {}) {
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f)
             )
-            Switch(checked = false, onCheckedChange = { })
+            Switch(
+                checked = isDarkTheme,
+                onCheckedChange = { isDarkTheme = it  }
+            )
         }
 
         SettingsRow(
